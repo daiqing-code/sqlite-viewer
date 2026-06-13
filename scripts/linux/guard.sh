@@ -2,15 +2,15 @@
 # 守护脚本 — 检测 gateway 进程 + 监控 memory/ 目录自动索引
 # 用法: bash scripts/guard.sh
 
-CONFIG="$(cd "$(dirname "$0")/.." && pwd)/config.json"
+CONFIG="$(cd "$(dirname "$0")/../.." && pwd)/config.json"
 PORT=$(grep -oP '(?<="port": )\d+' "$CONFIG")
 AGENT_ID=$(grep -oP '(?<="agentId": ")[^"]*' "$CONFIG")
 if [ -z "$AGENT_ID" ]; then AGENT_ID="main"; fi
-SERVER_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+SERVER_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 SERVER_CMD="/usr/bin/node ${SERVER_DIR}/server.cjs"
 PIDFILE="/tmp/guarded-sqlite-viewer.pid"
 WATCH_PIDFILE="/tmp/guarded-sqlite-watcher.pid"
-WORKSPACE_DIR="${SERVER_DIR}/.."
+WORKSPACE_DIR="$(cd "$SERVER_DIR/.." && pwd)"
 MEMORY_DIR="${WORKSPACE_DIR}/memory"
 
 cleanup() {

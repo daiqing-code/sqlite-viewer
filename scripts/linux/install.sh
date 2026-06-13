@@ -4,7 +4,7 @@
 
 set -e
 
-SERVER_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+SERVER_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 CONFIG="${SERVER_DIR}/config.json"
 SERVICE_NAME="sqlite-viewer"
 SERVICE_FILE="/etc/systemd/system/${SERVICE_NAME}.service"

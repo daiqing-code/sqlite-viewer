@@ -7,7 +7,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROJECT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 CONFIG="$PROJECT_DIR/config.json"
 PORT=$(grep -oP '(?<="port": )\d+' "$CONFIG" 2>/dev/null || echo 18788)
 
