@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.bak
+backups/
+tsconfig.tsbuildinfo
+*.log
+*.pid

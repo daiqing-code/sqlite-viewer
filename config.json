@@ -1,0 +1,9 @@
+{
+  "port": 18788,
+  "dbSubPath": ".openclaw/memory/main.sqlite",
+  "workspaceSubPath": ".openclaw/workspace",
+  "backupDirName": "backups",
+  "agentId": "",
+  "indexTimeoutMs": 30000,
+  "restartDelayMs": 2000
+}

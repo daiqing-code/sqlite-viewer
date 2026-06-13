@@ -1,0 +1,19 @@
+:root{--font-sans:'Inter','Segoe UI',system-ui,sans-serif;--font-mono:'JetBrains Mono','SF Mono',monospace;--radius-sm:4px;--radius-md:8px;--radius-lg:12px;--transition-fast:120ms ease-out;--z-sidebar:10;--z-header:20;--z-modal:40}
+
+[data-mode="dark"]{
+  --bg-page:oklch(.12 .01 260);--bg-surface:oklch(.15 .012 260);--bg-elevated:oklch(.18 .015 260);
+  --bg-hover:oklch(.21 .018 260);--bg-inset:oklch(.10 .008 260);
+  --border-subtle:oklch(.22 .015 260);--border-default:oklch(.28 .018 260);--border-strong:oklch(.35 .02 260);
+  --text-dim:oklch(.45 .02 260);--text-secondary:oklch(.7 .018 260);--text-primary:oklch(.88 .012 260);--text-bright:oklch(.95 .008 260);
+}
+[data-mode="light"]{
+  --bg-page:oklch(.96 .005 90);--bg-surface:oklch(.94 .005 90);--bg-elevated:oklch(.92 .006 90);
+  --bg-hover:oklch(.88 .007 90);--bg-inset:oklch(.98 .003 90);
+  --border-subtle:oklch(.85 .008 90);--border-default:oklch(.78 .01 90);--border-strong:oklch(.68 .012 90);
+  --text-dim:oklch(.5 .015 90);--text-secondary:oklch(.35 .012 90);--text-primary:oklch(.18 .01 90);--text-bright:oklch(.08 .008 90);
+}
+[data-theme="indigo"]{--accent:oklch(.62 .22 265);--accent-hover:oklch(.68 .22 265);--accent-glow:oklch(.62 .22 265/.15);--accent-bg:oklch(.62 .22 265/.08);--accent-text:oklch(.95 .02 265)}
+[data-theme="emerald"]{--accent:oklch(.62 .2 155);--accent-hover:oklch(.68 .2 155);--accent-glow:oklch(.62 .2 155/.15);--accent-bg:oklch(.62 .2 155/.08);--accent-text:oklch(.95 .02 155)}
+[data-theme="amber"]{--accent:oklch(.65 .18 75);--accent-hover:oklch(.72 .18 75);--accent-glow:oklch(.65 .18 75/.15);--accent-bg:oklch(.65 .18 75/.08);--accent-text:oklch(.95 .02 75)}
+[data-theme="rose"]{--accent:oklch(.6 .2 10);--accent-hover:oklch(.66 .2 10);--accent-glow:oklch(.6 .2 10/.15);--accent-bg:oklch(.6 .2 10/.08);--accent-text:oklch(.95 .02 10)}
+[data-theme="violet"]{--accent:oklch(.6 .22 295);--accent-hover:oklch(.66 .22 295);--accent-glow:oklch(.6 .22 295/.15);--accent-bg:oklch(.6 .22 295/.08);--accent-text:oklch(.95 .02 295)}
