@@ -6,7 +6,7 @@
 
 ## Linux
 
-### 快速启动
+### 快速启动（自动装依赖 + 构建 + 启动）
 
 ```bash
 cd sqlite-viewer
@@ -14,6 +14,8 @@ bash scripts/linux/start.sh
 ```
 
 ### 安装为系统服务（开机自启）
+
+装依赖 → 构建前端 → 注册 systemd 服务 → 开机自启。和 start 的区别：多了一步注册服务。
 
 ```bash
 bash scripts/linux/install.sh
@@ -31,7 +33,7 @@ bash scripts/linux/start.sh --dev
 
 ## Windows
 
-### 快速启动
+### 快速启动（自动装依赖 + 构建 + 启动）
 
 以管理员身份打开 PowerShell：
 

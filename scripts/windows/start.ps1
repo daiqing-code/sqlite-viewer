@@ -1,48 +1,47 @@
+$OutputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8
+chcp 65001 > $null 2>&1
+
+
 param(
     [string]$Action = "start"
 )
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $ProjectDir = Resolve-Path "$ScriptDir\..\.."
-
-function Write-Step {
-    param([string]$Msg)
-    Write-Host "   $Msg"
-}
+$ConfigFile = "$ProjectDir\config.json"
+$Port = (Get-Content $ConfigFile | ConvertFrom-Json).port
 
 Write-Host "🚀 [start] 启动服务"
 Write-Host "   目录: $ProjectDir"
 
-$node = Get-Command "node" -ErrorAction SilentlyContinue
-if (-not $node) {
-    Write-Host ""
-    Write-Host "   ❌ 未找到 Node.js，请先安装 https://nodejs.org"
-    exit 1
-}
-
+# 1. 检查/安装依赖
 if (-not (Test-Path "$ProjectDir\node_modules")) {
-    Write-Host ""
-    Write-Host "   ❌ node_modules 不存在，请先运行:"
-    Write-Host "      .\scripts\windows\install.ps1"
-    exit 1
+    Write-Host "   📥 安装依赖..."
+    Set-Location $ProjectDir
+    npm install --silent
+    Write-Host "   ✅"
 }
 
+# 2. 检查/构建前端
 if (-not (Test-Path "$ProjectDir\dist\index.html")) {
-    Write-Host ""
-    Write-Host "   ❌ 前端未构建，请先运行:"
-    Write-Host "      .\scripts\windows\install.ps1"
-    exit 1
+    Write-Host "   🔨 构建前端..."
+    Set-Location $ProjectDir
+    npm run build
+    Write-Host "   ✅"
 }
 
-# 检查端口
-$portInUse = (Get-NetTCPConnection -LocalPort 18788 -ErrorAction SilentlyContinue)
+# 3. 检查端口
+$portInUse = Get-NetTCPConnection -LocalPort $Port -ErrorAction SilentlyContinue
 if ($portInUse) {
     Write-Host ""
-    Write-Host "   ⚠️  端口 18788 已被占用"
+    Write-Host "   ⚠️  端口 $Port 已被占用"
     exit 1
 }
 
 Write-Host ""
+Write-Host "   🌐 http://localhost:$Port"
+Write-Host ""
+
 if ($Action -eq "dev") {
     Write-Host "   🧪 开发模式 (热加载)"
     $psi = New-Object System.Diagnostics.ProcessStartInfo
@@ -53,7 +52,5 @@ if ($Action -eq "dev") {
 
     node "$ProjectDir\server.cjs"
 } else {
-    Write-Host "   🌐 http://localhost:18788"
-    Write-Host ""
     node "$ProjectDir\server.cjs"
 }

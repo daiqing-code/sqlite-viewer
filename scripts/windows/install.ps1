@@ -1,3 +1,7 @@
+$OutputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8
+chcp 65001 > $null 2>&1
+
+
 # 安装 & 注册守护服务（计划任务开机自启）
 # 以管理员身份运行
 # 用法: .\scripts\windows\install.ps1

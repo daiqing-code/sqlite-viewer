@@ -1,3 +1,7 @@
+$OutputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8
+chcp 65001 > $null 2>&1
+
+
 param(
     [string]$Action = "start"
 )
