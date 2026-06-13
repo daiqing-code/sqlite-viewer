@@ -1,4 +1,4 @@
-$OutputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8
+﻿$OutputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8
 chcp 65001 > $null 2>&1
 
 

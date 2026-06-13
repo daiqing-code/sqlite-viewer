@@ -1,11 +1,11 @@
 {
   "name": "sqlite-viewer",
   "version": "1.0.0",
-  "description": "墨衡记忆库查看器",
+  "description": "\u58a8\u8861\u8bb0\u5fc6\u5e93\u67e5\u770b\u5668",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npx tsc -b && vite build",
     "preview": "vite preview",
     "server": "node server.js"
   },
