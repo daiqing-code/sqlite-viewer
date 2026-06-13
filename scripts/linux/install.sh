@@ -27,7 +27,7 @@ echo ""
 echo "⚙️  [3/4] 注册系统服务..."
 cat > /tmp/${SERVICE_NAME}.service << EOF
 [Unit]
-Description=记忆库服务 (端口 $(grep -oP '(?<="port": )\d+' "$CONFIG"))
+Description=$(grep -oP '(?<="port": )\d+' "$CONFIG")
 After=network.target
 
 [Service]
