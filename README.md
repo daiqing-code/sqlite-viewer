@@ -15,13 +15,11 @@ bash scripts/linux/start.sh
 
 ### 安装为系统服务（开机自启）
 
-装依赖 → 构建前端 → 注册 systemd 服务 → 开机自启。和 start 的区别：多了一步注册服务。
+装依赖 → 构建前端 → 注册 systemd 服务 → 开机自启。
 
 ```bash
 bash scripts/linux/install.sh
 ```
-
-安装后服务随 gateway 自动启停。
 
 ### 开发模式（热加载）
 
@@ -50,54 +48,43 @@ cd sqlite-viewer
 .\scripts\windows\install.ps1
 ```
 
-安装后会注册一个计划任务，开机自动运行守护脚本。守护脚本每 5 秒检测 OpenClaw gateway 进程，gateway 启动时自动拉起后端，gateway 关闭时自动停止。
-
-### 卸载
-
-以管理员身份打开 PowerShell：
-
-```powershell
-Unregister-ScheduledTask -TaskName "sqlite-viewer-guard" -Confirm:$false
-```
-
 ---
 
 ## 目录结构
 
 ```
 sqlite-viewer/
-├── config.json         配置（端口、路径、agentID 等）
-├── server.cjs          后端服务
-├── scripts/
-│   ├── linux/              Linux 脚本
-│   │   ├── install.sh     安装
-│   │   ├── start.sh       启动
-│   │   └── guard.sh       守护
-│   └── windows/
-│       ├── install.ps1 Windows 安装（注册计划任务）
-│       ├── start.ps1   Windows 启动
-│       └── guard.ps1   Windows 守护（计划任务调用）
-├── src/                前端源码
-└── dist/               构建产物
+├── config.json          配置（端口、路径、agentID 等）
+├── server.cjs           后端服务
+├── scripts/             启动/安装/守护脚本
+├── src/                 前端源码
+│   ├── App.tsx          主应用（竖排 tab 导航 + 侧边栏 + 编辑器）
+│   ├── main.tsx         入口
+│   ├── utils/api.ts     API 层
+│   ├── types/           类型定义
+│   ├── styles/          CSS（按模块拆分为 6 个小文件）
+│   └── themes.json      主题色配置（亮/暗 + 5 种强调色）
+├── dist/                构建产物
+└── GIT_HELP.md          本地 Git 备忘（不上传）
 ```
 
 ## 功能说明
 
-### 工作区
+### 导航
 
-显示 IDENTITY.md、MEMORY.md、SOUL.md 等核心文件，支持在线编辑保存。
+竖排 tab 栏在左侧，从上到下：
+- **工作区** — 显示核心文件（IDENTITY.md、MEMORY.md 等），支持在线编辑保存
+- **技能** — 展开显示技能目录及文件，点击编辑
+- **数据库** — memory/ 的 SQLite 索引分块（按月分组），支持搜索和多视图
+- **设置**（底部齿轮图标）— Logo、标题、强调色、亮暗模式
 
-### 技能
+### 自定义外观
 
-左侧显示所有技能目录，展开后显示目录内文件。点击技能目录直接在右侧编辑 SKILL.md，点击子文件编辑对应文件。
-
-### 数据库
-
-显示 memory/ 目录文件的数据库索引分块，按月分组，支持分块/源码/详情三种视图。
-
-### 记忆
-
-以同样按月分组结构显示 memory/ 下的文件，点击后在右侧编辑器中修改，保存后自动更新数据库索引。
+在设置页可配置：
+- **Logo** 支持 Emoji 点选或预设 SVG 图标（8 个内置图标）
+- **标题** 自定义头部显示标题
+- **强调色** 5 种可选（靛蓝、翠绿、琥珀、玫瑰、紫罗兰）
+- **亮暗模式**
 
 ## 配置
 
@@ -115,27 +102,9 @@ sqlite-viewer/
 
 ## 常见问题
 
-### 修改 IDENTITY.md 的名字后页面标题没变？
-
-不需要重启，刷新页面即可。名字从 `IDENTITY.md` 的 `**Name:**` 动态读取。
-
-### 手动在 memory/ 下添加了文件，数据库里没有？
-
-有以下方式触发索引：
-- 通过编辑器保存文件（自动触发索引并重启服务）
-- 或者重启服务
-
-**Linux:** `fuser -k 18788/tcp`
-
-**Windows:** `Stop-Process -Id (Get-NetTCPConnection -LocalPort 18788).OwningProcess -Force`
-
-### 18788 端口被占用？
+### 端口 18788 被占用？
 
 改 `config.json` 里的 `port` 字段，重启服务。
-
-### 保存后页面转圈 / 数据没更新？
-
-保存记忆文件时会自动索引并重启服务，等 5-8 秒再刷新即可。如果超过 10 秒还没恢复，手动重启服务。
 
 ### 只想试用，不想注册服务？
 
@@ -150,7 +119,3 @@ sqlite-viewer/
 **Linux:** `bash scripts/linux/install.sh`
 
 **Windows:** 管理员 PowerShell 运行 `.\scripts\windows\install.ps1`
-
-### 备份文件在哪？
-
-`workspace/backups/` 目录下，每个文件只保留最新一份备份。
